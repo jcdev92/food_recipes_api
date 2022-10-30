@@ -1,5 +1,8 @@
 const { DataTypes } = require('sequelize');
 const db = require('../utils/database');
+const Users = require('./users.models');
+const Categories = require('./categories.models');
+
 const Recipes = db.define('recipes', {
     id: {
         type: DataTypes.UUID,
@@ -37,7 +40,7 @@ const Recipes = db.define('recipes', {
         allowNull: false,
         field: 'user_id',
         references: {
-            model: 'users',
+            model: Users,
             key: 'id'
         }
     },
@@ -46,7 +49,7 @@ const Recipes = db.define('recipes', {
         allowNull: false,
         field: 'category_id',
         references: {
-            model: 'categories',
+            model: Categories,
             key: 'id'
         }
     },

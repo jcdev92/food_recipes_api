@@ -13,7 +13,8 @@ const Categories = db.define('categories', {
         allowNull: false,
         unique: true
     }
-});
+    //? It avoids sequelize to create the fields createdAt and updatedAt
+}, {timestamps: false});
 
 
 module.exports = Categories;
