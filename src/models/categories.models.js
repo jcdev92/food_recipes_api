@@ -10,7 +10,8 @@ const Categories = db.define('categories', {
     },
     name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     }
 });
 

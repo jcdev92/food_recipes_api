@@ -46,7 +46,7 @@ const Recipes = db.define('recipes', {
         allowNull: false,
         field: 'category_id',
         references: {
-            model: '', // 'categories' add the model once it is created,
+            model: 'categories',
             key: 'id'
         }
     },
