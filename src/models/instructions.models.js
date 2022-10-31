@@ -21,7 +21,7 @@ const Instruction = db.define('instruction', {
     recipeId: {
         type: DataTypes.UUID,
         allowNull: false,
-        field: 'recipe_id'
+        field: 'recipe_id',
         reference: {
             model: Recipes,
             key: 'id'

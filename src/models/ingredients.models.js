@@ -30,6 +30,6 @@ const Ingredient = db.define('ingredient', {
             isUrl: true
         }
     }
-});
+}, {timestamps: false});
 
 module.exports = Ingredient;

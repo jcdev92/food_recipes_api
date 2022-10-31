@@ -1,6 +1,7 @@
 //? Dependencies
 const express = require('express');
 const database = require('./utils/database');
+const initModels = require('./models/initModels');
 
 //? Files
 const {port} = require('./config');
@@ -18,6 +19,10 @@ app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/auth', authRouter)
 
 
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'Hello World!', users: `localhost:${port}/api/v1/users`});
+});
+
 database.authenticate()
     .then(() => console.log('Database connected...'))
     .catch(err => console.log('Error: ' + err));
@@ -26,9 +31,8 @@ database.sync()
     .then(() => console.log('Database synced...'))
     .catch(err => console.log('Error: ' + err));
 
-app.get('/', (req, res) => {
-    res.status(200).json({ message: 'Hello World!', users: `localhost:${port}/api/v1/users`});
-});
+initModels();
+
 
 //? Server
 app.listen(port, () => {
