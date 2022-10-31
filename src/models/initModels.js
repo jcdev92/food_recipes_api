@@ -8,7 +8,9 @@ const UsersRecipes = require('./users_recipes.models');
 const RecipesIngredients = require('./recipes_ingredients.models');
 const UsersIngredients = require('./users_ingredients.models');
 
-const initModels = () => {ç
+const initModels = () => {
+    //? Has many has the foreign key in the target model
+    //? Belongs to has the foreign key in the source model
 
     //? Users 1:M Recipes
     Users.hasMany(Recipes);
@@ -42,13 +44,13 @@ const initModels = () => {ç
     Recipes.hasMany(Instructions);
     Instructions.belongsTo(Recipes);
 
-    //? Recipes 1:M Categories
-    Recipes.hasMany(Categories);
-    Categories.belongsTo(Recipes);
+    //? Recipes M:1 Categories
+    Categories.hasMany(Recipes);
+    Recipes.belongsTo(Categories);
 
-    //? Recipes 1:M Types
-    Recipes.hasMany(Types);
-    Types.belongsTo(Recipes);
+    //? Ingredients M:1 Types
+    Types.hasMany(Ingredients);
+    Ingredients.belongsTo(Types);
 
 }
 
