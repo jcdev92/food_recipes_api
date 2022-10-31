@@ -45,13 +45,13 @@ const deleteCategory = (req, res) => {
     categoryControllers.deleteCategory(id)
         .then(data => {
             if (data) {
-                res.status(200).json({message: `Category ${id} deleted`});
+                res.status(204).json();
             } else {
-                res.status(400).json({message: `Category ${id} not found`});
+                res.status(404).json({message: `Category ${id} not found`});
             }
         })
         .catch(err => {
-            res.status(400).json(err);
+            res.status(400).json({message: err.message});
         });
 }
 

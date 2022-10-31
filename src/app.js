@@ -7,6 +7,7 @@ const initModels = require('./models/initModels');
 const {port} = require('./config');
 const usersRouter = require('./users/users.router');
 const authRouter = require('./auth/auth.router');
+const categoriesRouter = require('./categories/categories.router');
 
 //? Initial Configs
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 //? Routes
 app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/categories', categoriesRouter)
 
 
 app.get('/', (req, res) => {
