@@ -2,6 +2,7 @@
 const express = require('express');
 const database = require('./utils/database');
 const initModels = require('./models/initModels');
+const cors = require('cors');
 
 //? Files
 const {port} = require('./config');
@@ -14,6 +15,7 @@ const app = express();
 
 //? Middlewares
 app.use(express.json());
+app.use(cors());
 
 //? Routes
 app.use('/api/v1/users', usersRouter)
