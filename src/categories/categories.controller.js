@@ -6,24 +6,16 @@ const Categories = require('../models/categories.models');
 //? Delete a category
 
 // GET all categories
-const getAllCategories = async() => {
-    return await Categories.findAll();
-}
+const getAllCategories = async() => (await Categories.findAll());
 
 // GET a category
-const getCategory = async(id) => {
-    return await Categories.findOne({where: id});
-}
+const getCategory = async(id) => (await Categories.findOne({where: id}));
 
 // Create a category
-const createCategory = async(name) => {
-    return Categories.create(name);
-}
+const createCategory = async(name) => (await Categories.create({name}));
 
 // Delete a category
-const deleteCategory = async(id) => {
-    return await Categories.destroy({where: id});
-}
+const deleteCategory = async(id) => (await Categories.destroy({where: id}));
 
 module.exports = {
     getAllCategories,
