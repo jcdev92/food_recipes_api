@@ -1,14 +1,17 @@
 const {getAllTheTypes, getTypeById, postType, deleteTypeById} = require('./types.services');
-const {Router} = require("express");
+const router = require('express').Router();
+const passport = require('passport');
+const adminValidate = require('../middlewares/role.middleware');
+require('../middlewares/auth.middleware')(passport);
 
 // types router
 
-Router.route('/')
+router.route('/')
     .get(getAllTheTypes)
-    .post(postType);
+    .post(passport.authenticate('jwt', {session: false}), adminValidate, postType);
 
-Router.route('/:id')
+router.route('/:id')
     .get(getTypeById)
-    .delete(deleteTypeById);
+    .delete(passport.authenticate('jwt', {session: false}), adminValidate, deleteTypeById);
 
-module.exports = Router;
+module.exports = router;
