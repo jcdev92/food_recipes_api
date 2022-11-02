@@ -1,4 +1,4 @@
-const {getAllTypes, getOneType, createType, deleteType} = require('../models/types.models');
+const {getAllTypes, getOneType, createType, deleteType} = require('./types.controller');
 
 // types services
 
@@ -31,8 +31,8 @@ const postType = (req, res) => {
     const {name} = req.body;
     if (name) {
         createType(name)
-        .then(data => res.status(201).json(data))
-        .catch(err => res.status(400).json({message: err.message}));
+            .then(data => res.status(201).json(data))
+            .catch(err => res.status(400).json({message: err.message}));
     } else {
         res.status(400).json({message: 'Please provide a name for the type'});
     }
