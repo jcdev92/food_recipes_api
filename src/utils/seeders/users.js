@@ -12,7 +12,7 @@ for(let i = 0; i < 10; i++){
             email: faker.internet.email(),
             password: 'root',
             phone: faker.phone.number(),
-            birthday: faker.date.birthdate()
+            birthDay: faker.date.birthdate()
         }
     )
 }
@@ -23,5 +23,5 @@ Users.create({
     email: 'admin@admin.com',
     password: 'root',
     phone: faker.phone.number(),
-    birthday: faker.date.birthdate()
+    birthDay: faker.date.birthdate()
 })

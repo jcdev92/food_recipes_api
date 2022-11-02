@@ -15,8 +15,7 @@ const Instruction = db.define('instruction', {
     },
     step: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: true
+        allowNull: false
     },
     recipeId: {
         type: DataTypes.UUID,
