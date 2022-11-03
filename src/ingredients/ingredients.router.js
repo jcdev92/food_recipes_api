@@ -5,8 +5,6 @@ const adminMiddleware = require('../middlewares/role.middleware')
 const ingredientServices = require('./ingredients.services')
 require('../middlewares/auth.middleware')(passport)
 
-
-
 //? /ingredients
 //? /ingredients/:ingredient_id
 
@@ -15,7 +13,7 @@ router.route('/')
     .post(
         passport.authenticate('jwt', {session: false}),
         adminMiddleware,
-        ingredientServices.createIngredient
+        ingredientServices.postIngredient
     )
 
 router.route('/:ingredient_id')
@@ -23,7 +21,7 @@ router.route('/:ingredient_id')
     .patch(
         passport.authenticate('jwt', {session: false}),
         adminMiddleware,
-        ingredientServices.updateIngredient
+        ingredientServices.patchIngredient
     )
     .delete(
         passport.authenticate('jwt', {session: false}),

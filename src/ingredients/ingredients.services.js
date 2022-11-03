@@ -1,54 +1,100 @@
-const uuid = require('uuid')
+const ingredientControllers = require("./ingredients.controller");
 
-const Ingredients = require('../models/ingredients.models')
-
-const getAllIngredients = async() => {
-    const data = await Ingredients.findAll()
-    return data
-}
-
-const getIngredientById = async (id) => {
-    const data = await Ingredients.findOne({
-        where: {
-            id
-        }
+const getAllIngredients = (req, res) => {
+  ingredientControllers
+    .getAllIngredients()
+    .then((data) => {
+      res.status(200).json(data);
     })
-    return data
-}
+    .catch((err) => {
+      res.status(400).json({ message: err.message });
+    });
+};
 
-const createIngredient = async (data) => {
-    const response = await Ingredients.create({
-        id: uuid.v4(),
-        name: data.name,
-        typeId: data.typeId,
-        urlImg: data.urlImg
+const getIngredientById = (req, res) => {
+  const id = req.params.ingredient_id;
+  ingredientControllers
+    .getIngredientById(id)
+    .then((data) => {
+      if (data) {
+        res.status(200).json(data);
+      } else {
+        res.status(404).json({ message: "Invalid ID", id });
+      }
     })
-    return response
-}
+    .catch((err) => {
+      res.status(400).json({ message: err.message });
+    });
+};
 
-const updateIngredient = async (id, data) => {
-    const response = await Ingredients.update(data, {
-        where: {
-            id
-        }
+const postIngredient = (req, res) => {
+  const { name, typeId, urlImg } = req.body;
+
+  if (name && typeId) {
+    ingredientControllers
+      .createIngredient({
+        name,
+        typeId,
+        urlImg,
+      })
+      .then((data) => {
+        res.status(201).json(data);
+      })
+      .catch((err) => {
+        res.status(400).json({ message: err.message });
+      });
+  } else {
+    res.status(400).json({
+      message: "Missing Data",
+      fields: {
+        name: "string",
+        typeId: "number",
+        urlImg: "string",
+      },
+    });
+  }
+};
+
+const patchIngredient = (req, res) => {
+  const { name, typeId, urlImg } = req.body;
+  const id = req.params.ingredient_id;
+  ingredientControllers
+    .updateIngredient(id, { name, typeId, urlImg })
+    .then((data) => {
+      if (data[0]) {
+        res
+          .status(200)
+          .json({ message: `Ingredient with ID: ${id} edited successfully` });
+      } else {
+        res.status(404).json({ message: "Invalid ID", id });
+      }
     })
-    return response
-}
+    .catch((err) => {
+      res.status(400).json({ message: err.message });
+    });
+};
 
-const deleteIngredient = async (id) => {
-    const data = await Ingredients.destroy({
-        where: {
-            id
-        }
+const deleteIngredient = (req, res) => {
+  const id = req.params.ingredient_id;
+
+  ingredientControllers
+    .deleteIngredient(id)
+    .then((data) => {
+      if (data) {
+        res.status(204).json();
+      } else {
+        res.status(404).json({ message: "Invalid ID", id });
+      }
     })
-    return data
-}
-
+    .catch((err) => {
+      res.status(400).json({ message: err.message });
+    });
+};
 
 module.exports = {
-    getAllIngredients,
-    getIngredientById,
-    createIngredient,
-    updateIngredient,
-    deleteIngredient
-}
+  getAllIngredients,
+  getIngredientById,
+  postIngredient,
+  patchIngredient,
+  deleteIngredient
+};
