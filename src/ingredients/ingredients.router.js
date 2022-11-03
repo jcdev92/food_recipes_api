@@ -15,7 +15,7 @@ router.route('/')
     .post(
         passport.authenticate('jwt', {session: false}),
         adminMiddleware,
-        ingredientServices.postIngredient
+        ingredientServices.createIngredient
     )
 
 router.route('/:ingredient_id')
@@ -23,7 +23,7 @@ router.route('/:ingredient_id')
     .patch(
         passport.authenticate('jwt', {session: false}),
         adminMiddleware,
-        ingredientServices.patchIngredient
+        ingredientServices.updateIngredient
     )
     .delete(
         passport.authenticate('jwt', {session: false}),
