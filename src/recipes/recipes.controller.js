@@ -39,7 +39,36 @@ const getAllRecipes = async () => {
 };
 
 const getRecipeById = async (id) => {
-    return await Recipes.findOne({where: id});
+    return await Recipes.findOne({
+    where: {
+            id
+    },
+    attributes: {
+        exclude: ['userId', 'categoryId', 'createdAt', 'updatedAt']
+        },
+    include: [
+        {
+            model: Categories,
+        },
+        {
+            model: Users,
+                attributes: ['id', 'firstName', 'lastName']
+        },
+        {
+            model: Instructions,
+            attributes: ['step', 'description']
+        },
+        {
+            model: RecipesIngredients,
+                include: {
+                model: Ingredients,
+                    include: {
+                    model: Types,
+                }
+            },
+        }
+    ]
+    });
 }
 
 const createRecipe = async (data) => {
