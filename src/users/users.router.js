@@ -2,6 +2,7 @@ const router = require('express').Router()
 const passport = require('passport')
 const adminValidate = require('../middlewares/role.middleware')
 const userServices = require('./users.services')
+const {getRecipesUser} = require('../recipes/recipes.services')
 require('../middlewares/auth.middleware')(passport)
 
 //? root and protected route
@@ -10,12 +11,13 @@ router.get('/', userServices.getAllUsers)
 //TODO el registerUser ira en la ruta /auth/register
 // router.post('/auth/register', userServices.registerUser)
 
-
 //? protected route
 router.route('/me')
     .get(passport.authenticate('jwt', {session: false}), userServices.getMyUser)
     .patch(passport.authenticate('jwt', {session: false}), userServices.patchMyUser)
     .delete(passport.authenticate('jwt', {session: false}), userServices.deleteMyUser)
+
+router.get('/me/myRecipes', passport.authenticate('jwt', {session: false}), getRecipesUser)
 
 //? dynamical routes by ID /users/:id
 
